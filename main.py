@@ -88,6 +88,5 @@ def scrape(url):
 
     driver.close()
 
-
 if __name__ == "__main__":
     scrape(sys.argv[1])
