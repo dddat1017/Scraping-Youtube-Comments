@@ -4,11 +4,14 @@ Main script to scrape the comments of any Youtube video.
 Example:
     $ python main.py YOUTUBE_VIDEO_URL
 """
-
+import csv
+import io
 from selenium import webdriver
 from selenium.common import exceptions
 import sys
 import time
+
+
 
 def scrape(url):
     """
@@ -85,7 +88,13 @@ def scrape(url):
     for username, comment in zip(username_elems, comment_elems):
         print(username.text + ":")
         print(comment.text + "\n")
-
+    
+    with io.open('coba2.csv', 'w', newline='', encoding="utf-16") as file:
+         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
+         writer.writerow(["Username", "Comment"])
+         for username, comment in zip(username_elems, comment_elems):
+             writer.writerow([username.text, comment.text])
+    
     driver.close()
 
 if __name__ == "__main__":
