@@ -89,7 +89,7 @@ def scrape(url):
         print(username.text + ":")
         print(comment.text + "\n")
     
-    with io.open('coba2.csv', 'w', newline='', encoding="utf-16") as file:
+    with io.open('file.csv', 'w', newline='', encoding="utf-16") as file:
          writer = csv.writer(file, quoting=csv.QUOTE_ALL)
          writer.writerow(["Username", "Comment"])
          for username, comment in zip(username_elems, comment_elems):
