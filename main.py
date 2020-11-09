@@ -4,14 +4,13 @@ Main script to scrape the comments of any Youtube video.
 Example:
     $ python main.py YOUTUBE_VIDEO_URL
 """
+
 import csv
 import io
 from selenium import webdriver
 from selenium.common import exceptions
 import sys
 import time
-
-
 
 def scrape(url):
     """
@@ -25,8 +24,9 @@ def scrape(url):
         When certain elements to look for cannot be found
     """
 
-    # Note: replace argument with absolute path to the driver executable.
-    driver = webdriver.Chrome('C:\webdrivers\chromedriver')
+    # Note: Download and replace argument with path to the driver executable.
+    # Simply download the executable and move it into the webdrivers folder.
+    driver = webdriver.Chrome('./webdrivers/chromedriver')
 
     # Navigates to the URL, maximizes the current window, and
     # then suspends execution for (at least) 5 seconds (this
@@ -83,18 +83,13 @@ def scrape(url):
         print(error)
 
     print("> VIDEO TITLE: " + title + "\n")
-    print("> USERNAMES & COMMENTS:")
 
-    for username, comment in zip(username_elems, comment_elems):
-        print(username.text + ":")
-        print(comment.text + "\n")
-    
-    with io.open('file.csv', 'w', newline='', encoding="utf-16") as file:
-         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
-         writer.writerow(["Username", "Comment"])
-         for username, comment in zip(username_elems, comment_elems):
-             writer.writerow([username.text, comment.text])
-    
+    with io.open('results.csv', 'w', newline='', encoding="utf-16") as file:
+        writer = csv.writer(file, delimiter =",", quoting=csv.QUOTE_ALL)
+        writer.writerow(["Username", "Comment"])
+        for username, comment in zip(username_elems, comment_elems):
+            writer.writerow([username.text, comment.text])
+
     driver.close()
 
 if __name__ == "__main__":
